@@ -33,6 +33,17 @@ class _HomeState extends State<Home> {
     //return ReadData();
   }
 
+  ///===========Add Data============
+  Future<void> AddData() async {
+    final url = "http://192.168.1.110/flutter-api/controllers/readData.php";
+    final res = await http.post(Uri.parse(url),body:{
+      'username':username.text,
+      'password':password.text,
+      'name':name.text,
+      'address':address.text,
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
