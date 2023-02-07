@@ -96,8 +96,9 @@ class _HomeState extends State<Home> {
                 ),
                 ElevatedButton(onPressed: () {
                   print(username.text);
+                  print(password.text);
                   print(name.text);
-
+                  print(address.text);
                 }, child: Text("Send"))
               ],
             ),
