@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
 
   ///===========Add Data============
   Future<void> AddData() async {
-    final url = "http://192.168.1.110/flutter-api/controllers/readData.php";
+    final url = "http://192.168.1.110/flutter-api/controllers/addData.php";
     final res = await http.post(Uri.parse(url),body:{
       'username':username.text,
       'password':password.text,
@@ -117,6 +117,7 @@ class _HomeState extends State<Home> {
                   print(name.text);
                   print(address.text);
                   AddData();
+                  Navigator.pop(context);
                 }, child: Text("Send"))
               ],
             ),
