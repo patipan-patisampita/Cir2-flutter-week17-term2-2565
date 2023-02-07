@@ -42,6 +42,12 @@ class _HomeState extends State<Home> {
       'name':name.text,
       'address':address.text,
     });
+
+    if(res.statusCode == 200) {
+      final red = jsonDecode(res.body);
+      print(red);
+    }
+
   }
 
   @override
@@ -110,6 +116,7 @@ class _HomeState extends State<Home> {
                   print(password.text);
                   print(name.text);
                   print(address.text);
+                  AddData();
                 }, child: Text("Send"))
               ],
             ),
