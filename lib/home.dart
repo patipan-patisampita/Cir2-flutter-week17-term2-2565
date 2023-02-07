@@ -10,22 +10,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  TextEditingController username =TextEditingController();
-  TextEditingController name =TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController address = TextEditingController();
 
-  List list=[];
+  List list = [];
+
   ///===========Read Data============
-  Future ReadData() async{
-    final url ="http://192.168.1.110/flutter-api/controllers/readData.php";
+  Future<void> ReadData() async {
+    final url = "http://192.168.1.110/flutter-api/controllers/readData.php";
     final res = await http.get(Uri.parse(url));
 
-    if(res.statusCode == 200){
-        final red = jsonDecode(res.body);
+    if (res.statusCode == 200) {
+      final red = jsonDecode(res.body);
 
-        setState(() {
-          list.addAll(red);
-          print(list);
-        });
+      setState(() {
+        list.addAll(red);
+        print(list);
+      });
     }
     //return ReadData();
   }
@@ -37,8 +40,71 @@ class _HomeState extends State<Home> {
     getData();
   }
 
-  getData() async{
+  getData() async {
     await ReadData();
+  }
+
+  ///===========Add User Data============
+  AddUser() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            height: 300,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: username,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Please input Email',
+                    prefixIcon: Icon(Icons.email),
+                    suffixIcon: Icon(Icons.check),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                TextFormField(
+                  controller: password,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    hintText: 'Please input Password',
+                    prefixIcon: Icon(Icons.visibility),
+                    suffixIcon: Icon(Icons.check),
+                  ),
+                  keyboardType: TextInputType.name,
+                ),
+                TextFormField(
+                  controller: name,
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    hintText: 'Please input Name',
+                    prefixIcon: Icon(Icons.account_box),
+                    suffixIcon: Icon(Icons.check),
+                  ),
+                  keyboardType: TextInputType.text,
+                ),
+                TextFormField(
+                  controller: address,
+                  decoration: InputDecoration(
+                    labelText: 'Address',
+                    hintText: 'Please input Address',
+                    prefixIcon: Icon(Icons.location_on),
+                    suffixIcon: Icon(Icons.check),
+                  ),
+                  keyboardType: TextInputType.text,
+                ),
+                ElevatedButton(onPressed: () {
+                  print(username.text);
+                  print(name.text);
+
+                }, child: Text("Send"))
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -47,6 +113,13 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("Flutter API"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                AddUser();
+              },
+              icon: Icon(Icons.add_location_outlined, size: 30.0))
+        ],
       ),
       body: ListView.builder(
         itemCount: list.length,
@@ -56,14 +129,21 @@ class _HomeState extends State<Home> {
             subtitle: Text(list[index]['name']),
             leading: CircleAvatar(
               radius: 20.0,
-              child: Text("An"),
+              child: Text(list[index]['username']
+                  .toString()
+                  .substring(0, 2)
+                  .toUpperCase()),
             ),
             trailing: Container(
               width: 100.0,
               child: Row(
                 children: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.edit,color: Colors.teal)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.delete,color: Colors.red)),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.edit, color: Colors.teal)),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.delete, color: Colors.red)),
                 ],
               ),
             ),
