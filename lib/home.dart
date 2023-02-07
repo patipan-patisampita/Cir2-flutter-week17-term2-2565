@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,6 +10,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  TextEditingController username =TextEditingController();
+  TextEditingController name =TextEditingController();
+
   List list=[];
   ///===========Read Data============
   Future ReadData() async{
@@ -50,8 +52,8 @@ class _HomeState extends State<Home> {
         itemCount: list.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text("username"),
-            subtitle: Text("มาร์ก เอลเลียต ซักเคอร์เบิร์ก"),
+            title: Text(list[index]['username']),
+            subtitle: Text(list[index]['name']),
             leading: CircleAvatar(
               radius: 20.0,
               child: Text("An"),
